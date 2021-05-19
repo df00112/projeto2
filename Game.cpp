@@ -29,7 +29,7 @@ Game::Game(const string& mazenumber) {
 		}
 		infile.close();
 	}
-	// loop para ver onde est· situado o Player
+	// loop para ver onde est√° situado o Player
 	for (int i = 0; unsigned(i) < vec.size(); i++) {
 		for (int j = 0; unsigned(j) < vec[i].size(); j++) {
 			if (vec[i][j] == 'H') {
@@ -39,24 +39,39 @@ Game::Game(const string& mazenumber) {
 		}
 	}
 	player = Player(player_row, player_col, 'H'); // inicializar Player
-	//loop para ver onde est„o os robots
+	//loop para ver onde est√£o os robots
 	for (int i = 0; unsigned(i) < vec.size(); i++) {
 		for (int j = 0; unsigned(j) < vec[i].size(); j++) {
 			if (vec[i][j] == 'R') {
 				robot_col = j;
 				robot_row = i;
 				robot = Robot(robot_row, robot_col, true, counter);
-				vecrobot.push_back(robot); // sempre que h· um robot, este È adicionado ao vetor de robots
+				vecrobot.push_back(robot); // sempre que h√° um robot, este √© adicionado ao vetor de robots
 				counter += 1;
 			}
 		}
 	}
-	robots = vecrobot; // vetor de robots È inicializado
+	robots = vecrobot; // vetor de robots √© inicializado
 
 }
-bool Game::play(){
+bool Game::play() {
+	while (player.isAlive()) {
+	
+	}
 	return true;
 }
-bool Game::isValid(){
+bool Game::isValid() {
 	return true;
+}
+void Game::showGameDisplay() const {
+	cout << string(50, '\n');
+	//maze
+}
+bool Game::collide(Robot& robot, Post& post) { // check if robot collided with post (and possibly set it as dead)
+	if (robot.getCol() == post.getCol() && robot.getRow() == post.getRow()) { robot.setAsDead(); post.setNonelectrified(); return true; }
+	else return false;
+}
+bool Game::collide(Robot& robot, Player& player) {
+	if (robot.getCol() == player.getCol() && robot.getRow() == player.getRow()) { robot.setAsDead(); player.setAsDead(); return true; }
+	else return false;
 }
